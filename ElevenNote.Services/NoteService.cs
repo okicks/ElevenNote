@@ -23,6 +23,8 @@ namespace ElevenNote.Services
             {
                 OwnerId = _userId,
                 Title = model.Title,
+                CategoryRefId = model.CategoryId,
+                Category = model.Category,
                 Content = model.Content,
                 CreatedUtc = DateTimeOffset.Now
             };
@@ -45,6 +47,8 @@ namespace ElevenNote.Services
                                 {
                                     NoteId = e.NoteId,
                                     Title = e.Title,
+                                    CategoryRefId = e.CategoryRefId,
+                                    Category = e.Category,
                                     IsStarred = e.IsStarred,
                                     CreatedUtc = e.CreatedUtc
                                 }
@@ -67,6 +71,8 @@ namespace ElevenNote.Services
                     {
                         NoteId = entity.NoteId,
                         Title = entity.Title,
+                        CategoryRefId = entity.CategoryRefId,
+                        Category = entity.Category,
                         Content = entity.Content,
                         CreatedUtc = entity.CreatedUtc,
                         ModifiedUtc = entity.ModifiedUtc
@@ -84,6 +90,8 @@ namespace ElevenNote.Services
                         .Single(e => e.NoteId == model.NoteId && e.OwnerId == _userId);
 
                 entity.Title = model.Title;
+                entity.CategoryRefId = model.CategoryId;
+                entity.Category = model.Category;
                 entity.Content = model.Content;
                 entity.ModifiedUtc = DateTimeOffset.UtcNow;
                 entity.IsStarred = model.IsStarred;
@@ -105,6 +113,11 @@ namespace ElevenNote.Services
 
                 return ctx.SaveChanges() == 1;
             }
+        }
+
+        public ApplicationDbContext GetDb()
+        {
+            return new ApplicationDbContext();
         }
     }
 }
